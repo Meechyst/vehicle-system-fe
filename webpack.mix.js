@@ -7,20 +7,20 @@ mix.styles(['./node_modules/bootstrap/dist/css/bootstrap.min.css', './node_modul
 
 })
 
-//mix.scripts([
-//    // Dependencies
-//    './node_modules/underscore/underscore.js',
-//    './node_modules/angular/angular.js',
-//    './node_modules/angular-animate/angular-animate.js',
-//    './node_modules/angular-aria/angular-aria.js',
-//    './node_modules/angular-messages/angular-messages.js',
-//    './node_modules/@uirouter/angularjs/release/angular-ui-router.js',
-//    './node_modules/restangular/dist/restangular.js',
-//    './node_modules/ngstorage/ngStorage.js',
-//    './node_modules/angular-toastr/dist/angular-toastr.tpls.js'
-//], 'public/js/vendor.js').options({
-//    processCssUrls: false
-//});
+mix.scripts([
+    // Dependencies
+    './node_modules/underscore/underscore.js',
+    './node_modules/angular/angular.js',
+    './node_modules/angular-animate/angular-animate.js',
+    './node_modules/angular-aria/angular-aria.js',
+    './node_modules/angular-messages/angular-messages.js',
+    './node_modules/@uirouter/angularjs/release/angular-ui-router.js',
+    './node_modules/restangular/dist/restangular.js',
+    './node_modules/ngstorage/ngStorage.js',
+    './node_modules/angular-toastr/dist/angular-toastr.tpls.js'
+], 'public/js/vendor.js').options({
+    processCssUrls: false
+});
 
 
 
