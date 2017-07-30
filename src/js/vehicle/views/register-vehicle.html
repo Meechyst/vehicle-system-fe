@@ -1,0 +1,271 @@
+<div class="panel panel-primary">
+    <div class="panel-body" style="text-align: center; margin:0 auto">
+        <h1>Register A New Vehicle</h1>
+    </div>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <a ui-sref="profile.vehicleList" class="btn btn-primary">
+                    <- Back
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <form class="form-horizontal" novalidate name="registerVehicleForm">
+                <fieldset>
+                    <!-- Text input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="plate">Plate <span style="color: #ff0000;"
+                                                                                      ng-hide="registerVehicleCtrl.formData.plate">*</span></label>
+
+                        <div class="col-md-4">
+                            <input ng-pattern="/^(0[1-9]|[1-7][0-9]|8[01])(([A-PR-VYZ])(\d{4,5})|([A-PR-VYZ]{2})(\d{3,4})|([A-PR-VYZ]{3})(\d{2,3}))$/"
+                                   ng-model-options="{ debounce: 100 }" minlength="7" maxlength="8" id="plate"
+                                   ng-model="registerVehicleCtrl.formData.plate"
+                                   name="plate" type="text" placeholder="ex:35GS1905" class="form-control"
+                                   uppercase-no-space unique-plate required>
+
+                            <div ng-messages="registerVehicleForm.plate.$error" ng-if="registerVehicleForm.plate.$touched" class="validation-error-messages">
+                                <div ng-show="registerVehicleForm.$pending.plate">Checking if this plate is available...</div>
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="unique">There's already a vehicle with this plate</div>
+                                <div ng-message="pattern">Enter a valid plate</div>
+                                <div ng-message="minlength">Atleast 7 characters</div>
+                                <div ng-message="maxlength">Can not exceed 13 characters</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Type Select-->
+                    <div class="form-group" ng-if="!registerVehicleCtrl.typeInput">
+                        <label class="col-md-4 control-label" for="typeSelect">Type <span style="color: #ff0000;"
+                                                                                          ng-hide="registerVehicleCtrl.formData.typeSelect">*</span></label>
+                        <div class="col-md-4">
+                            <select id="typeSelect" data-ng-disabled="registerVehicleCtrl.typeDisabled" name="typeSelect"
+                                     data-ng-change="registerVehicleCtrl.getBrands(registerVehicleCtrl.formData.typeSelect, null)"
+                                     data-ng-blur="registerVehicleCtrl.showAddTypeToggle()"
+                                     data-ng-focus="registerVehicleCtrl.showAddTypeToggle()"
+                                     data-ng-model="registerVehicleCtrl.formData.typeSelect" class="form-control" required>
+                                <option ng-repeat="type in registerVehicleCtrl.types" value="{{type.id}}">
+                                    {{type.name}}
+                                </option>
+                            </select>
+                            <div ng-messages="registerVehicleForm.typeSelect.$error"
+                                  ng-if="registerVehicleForm.typeSelect.$touched"
+                                  class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                                <div ng-show="registerVehicleCtrl.typeDisabled" style="width:100%;height:100%" class="lds-eclipse">
+                                    <div></div>
+                                </div>
+                            <span ng-show="registerVehicleCtrl.showAddType">
+                            Not in the list?
+                            <button ng-click="registerVehicleCtrl.typeToggle()" class="btn btn-success"><span class="glyphicon glyphicon-plus">Add</span></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Type input-->
+                    <div class="form-group" ng-if="registerVehicleCtrl.typeInput">
+                        <label class="col-md-4 control-label" for="typeText">Type <span style="color: #ff0000;"
+                                                                                        ng-hide="registerVehicleCtrl.formData.typeText">*</span></label>
+
+                        <div class="col-md-4">
+                            <input id="typeText" name="typeText" type="text" placeholder="ex:Car, bus etc.." maxlength="100"
+
+                                   ng-change="registerVehicleCtrl.getBrands(null,registerVehicleCtrl.formData.typeText)"
+                                   ng-model-options="{debounce : 500}"
+                                     ng-model="registerVehicleCtrl.formData.typeText" required class="form-control">
+                            <div ng-messages="registerVehicleForm.typeText.$error" ng-if="registerVehicleForm.typeText.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brand Select-->
+                    <div class="form-group" ng-if="!registerVehicleCtrl.brandInput">
+                        <label class="col-md-4 control-label" for="brandSelect">Brand <span style="color: #ff0000;"
+                                                                                            ng-hide="registerVehicleCtrl.formData.brandSelect">*</span></label>
+
+                        <div class="col-md-4">
+                            <select  id="brandSelect" data-ng-disabled="registerVehicleCtrl.brandDisabled"
+                                     name="brandSelect" data-ng-change="registerVehicleCtrl.showAddBrandToggle();
+                                      registerVehicleCtrl.getModels(registerVehicleCtrl.formData.brandSelect, null)"
+                                     data-ng-focus="registerVehicleCtrl.showAddBrandToggle()"
+                                     data-ng-model="registerVehicleCtrl.formData.brandSelect" class="form-control" required>
+                                <option ng-repeat="(id, name) in registerVehicleCtrl.brands" value="{{id}}">
+                                    {{name}}
+                                </option>
+                            </select>
+                            <div ng-messages="registerVehicleForm.brandSelect.$error"
+                                 ng-if="registerVehicleForm.brandSelect.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                       <div class="col-md-4">
+                           <div ng-show="registerVehicleCtrl.showBrandLoading" style="width:100%;height:100%" class="lds-eclipse">
+                               <div></div>
+                           </div>
+                        <div ng-show="registerVehicleCtrl.showAddBrand">Not in the list?
+                            <button ng-click="registerVehicleCtrl.brandToggle()" class="btn btn-success"><span class="glyphicon glyphicon-plus">Add</span></button>
+                        </div>
+                       </div>
+
+                    </div>
+
+                    <!-- Brand input-->
+                    <div class="form-group" ng-if="registerVehicleCtrl.brandInput">
+                        <label class="col-md-4 control-label" for="brandText">Brand <span style="color: #ff0000;"
+                                                                                          ng-hide="registerVehicleCtrl.formData.brandText">*</span></label>
+
+                        <div class="col-md-4">
+                            <input id="brandText" name="brandText" data-ng-disabled="registerVehicleCtrl.brandDisabled"
+                                   type="text" placeholder="ex:BMW" maxlength="100"
+                                   ng-change="registerVehicleCtrl.getModels(null,registerVehicleCtrl.formData.brandText)"
+                                   ng-model-options="{debounce : 500}"
+                                   ng-model="registerVehicleCtrl.formData.brandText" required class="form-control">
+                            <div ng-messages="registerVehicleForm.brandText.$error" ng-if="registerVehicleForm.brandText.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Model Select-->
+                    <div class="form-group" ng-if="!registerVehicleCtrl.modelInput">
+                        <label class="col-md-4 control-label" for="modelSelect">Model <span style="color: #ff0000;"
+                                                                                            ng-hide="registerVehicleCtrl.formData.modelSelect">*</span></label>
+
+                        <div class="col-md-4">
+                            <select  id="modelSelect" name="modelSelect"data-ng-disabled="registerVehicleCtrl.modelDisabled"
+                                     ng-blur="registerVehicleCtrl.showAddModelToggle()"
+                                     data-ng-focus="registerVehicleCtrl.showAddModelToggle()"
+                                     data-ng-model="registerVehicleCtrl.formData.modelSelect" class="form-control" required>
+                                <option ng-repeat="(id, name) in registerVehicleCtrl.models" value="{{id}}">
+                                    {{name}}
+                                </option>
+                            </select>
+                            <div ng-messages="registerVehicleForm.modelSelect.$error"
+                                 ng-if="registerVehicleForm.modelSelect.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                       <div class="col-md-4">
+                           <div ng-show="registerVehicleCtrl.showModelLoading" style="width:100%;height:100%" class="lds-eclipse">
+                               <div></div>
+                           </div>
+                        <div ng-show="registerVehicleCtrl.showAddModel">Not in the list?
+                            <button ng-click="registerVehicleCtrl.modelToggle()" class="btn btn-success"><span class="glyphicon glyphicon-plus">Add</span></button>
+                        </div>
+                       </div>
+
+                    </div>
+
+                    <!-- Model input-->
+                    <div class="form-group" ng-if="registerVehicleCtrl.modelInput">
+                        <label class="col-md-4 control-label" for="modelText">Model <span style="color: #ff0000;"
+                                                                                          ng-hide="registerVehicleCtrl.formData.modelText">*</span></label>
+                        <div class="col-md-4">
+                            <input id="modelText" name="modelText" type="text" data-ng-disabled="registerVehicleCtrl.modelDisabled"
+                                   placeholder="ex:corsa, 520i etc.." maxlength="100"
+                                   ng-model="registerVehicleCtrl.formData.modelText" required class="form-control">
+                            <div ng-messages="registerVehicleForm.modelText.$error" ng-if="registerVehicleForm.modelText.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Model year input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="modelYear">Model Year <span style="color: #ff0000;"
+                                                                                               ng-hide="registerVehicleCtrl.formData.modelYear">*</span></label>
+
+                        <div class="col-md-4">
+                            <input id="modelYear" name="modelYear" ng-pattern="/^(1[9][0-9][0-9]|2[0][0-1][0-7])$/g"
+                                   type="text" placeholder="ex:1969" minlength="4" maxlength="4"
+                                   ng-model="registerVehicleCtrl.formData.modelYear" class="form-control">
+                            <div ng-messages="registerVehicleForm.modelYear.$error"
+                                 ng-if="registerVehicleForm.modelYear.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="minlength">Atleast 4 numbers if you're specifying a year</div>
+                                <div ng-message="pattern">Only numbers between 1900-2017</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nickname input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nickname">Nickname</label>
+
+                        <div class="col-md-4">
+                            <input id="nickname" name="nickname" type="text" placeholder="ex:Batmobile" maxlength="100"
+                                   ng-model="registerVehicleCtrl.formData.nickname" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Color input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="color">Color</label>
+
+                        <div class="col-md-4">
+                            <input id="color" name="color" type="text" placeholder="ex:orange" maxlength="50"
+                                   ng-model="registerVehicleCtrl.formData.color" class="form-control">
+                        </div>
+                        <div ng-messages="registerVehicleForm.color.$error" ng-if="registerVehicleForm.color.$touched"
+                             class="validation-error-messages">
+                            <div ng-message="maxlength">Can not exceed 50 characters</div>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="active">Availability <span style="color: #ff0000;"
+                                                                                              ng-hide="registerVehicleCtrl.formData.active">*</span></label>
+
+                        <div class="col-md-4">
+                            <select id="active" name="active" data-ng-model="registerVehicleCtrl.formData.active"
+                                    class="form-control" required>
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+                        <div ng-messages="registerVehicleForm.active.$error" ng-if="registerVehicleForm.active.$touched"
+                             class="validation-error-messages">
+                            <div ng-message="required">This field is required</div>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="register"></label>
+
+                        <div class="col-md-4">
+                            <button id="register" name="register"
+                                    ng-click="registerVehicleCtrl.register(registerVehicleForm)"
+                                    data-ng-disabled="registerVehicleForm.$invalid || registerVehicleCtrl.disableSubmit"
+                                    class="btn" type="submit"
+                                    ng-keydown="$event.keyCode === 13 && registerVehicleCtrl.register(registerVehicleForm)"
+                                    ng-class="{'button-red' : registerVehicleForm.$invalid && registerVehicleForm.$dirty, 'button-green' : registerVehicleForm.$valid && registerVehicleForm.$dirty}"
+                                    >Register
+                            </button>
+                        </div>
+                    </div>
+                    <div class="well" ng-show="registerVehicleForm.$invalid">* are required.</div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

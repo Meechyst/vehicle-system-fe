@@ -1,0 +1,85 @@
+<div ng-show="vehicleDetailsCtrl.vehicle.id">
+    <div class="panel panel-primary">
+        <div class="panel-body" style="text-align: center; margin:0 auto">
+            <h1>{{vehicleDetailsCtrl.vehicle.nickname | ifEmpty:'No nickname'}}</h1>
+            <h4 ng-show="vehicleDetailsCtrl.vehicle.active == 1" style="color: #8ed01f" >Active</h4>
+            <h4 ng-show="vehicleDetailsCtrl.vehicle.active == 0" style="color: #ff2128" >Inactive</h4>
+        </div>
+    </div>
+    <h3><i>"{{vehicleDetailsCtrl.vehicle.plate}}"</i></h3><br>
+
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a ui-sref="profile.vehicleList" class="btn btn-primary">
+                        <- Back
+                    </a>
+
+                    <div class="pull-right">
+                        Vehicle's Owner:
+                        <!-- This causes a syntax error if no data passed here maybe a todo? -->
+                        <a ui-sref="profile.userDetail({userId:{{vehicleDetailsCtrl.vehicle.user.id}}})">
+                            {{vehicleDetailsCtrl.vehicle.user.name}}
+                        </a>
+                    </div>
+                    <br/>
+                    <div class="pull-right"
+                         ng-if="vehicleDetailsCtrl.loggedUser.id == vehicleDetailsCtrl.vehicle.user.id">
+                        <a ng-click="vehicleDetailsCtrl.removeVehicle(vehicleDetailsCtrl.loggedUser.id, vehicleDetailsCtrl.vehicle.id)" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                        <a ui-sref="profile.editVehicle({userId: {{vehicleDetailsCtrl.loggedUser.id}}, vehicleId: {{vehicleDetailsCtrl.vehicle.id}} })" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-wrench"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-4"><strong>Type:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.vmodel.type.name | ifEmpty:'N/A'}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Plate:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.plate}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Brand:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.vmodel.brand.name | ifEmpty:'N/A'}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Model:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.vmodel.name | ifEmpty:'N/A'}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Model Year:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.vmodel.year | ifEmpty:'N/A'}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Nickname:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.nickname | ifEmpty:'N/A'}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Color:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.color | ifEmpty:'N/A'}}</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Registered At:</strong></div>
+                <div class="col-sm-7">{{vehicleDetailsCtrl.vehicle.created_at | date:"MM/dd/yyyy 'at' h:mma"}}</div>
+            </div>
+            <div class="row" ng-if="vehicleDetailsCtrl.vehicle.updated_at > vehicleDetailsCtrl.vehicle.created_at">
+                <div class="col-sm-4">
+                   <i>Updated At:</i>
+                </div>
+                <div class="col-sm-7"><i>{{vehicleDetailsCtrl.vehicle.updated_at | date:"MM/dd/yyyy 'at' h:mma"}} </i></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div ng-show="vehicleDetailsCtrl.error" style="text-align: center">
+    <h1 class="alert-warning">{{vehicleDetailsCtrl.error}}</h1>
+
+    <p>Try choosing from the <a ui-sref="profile.vehicleList">list</a></p>
+</div>

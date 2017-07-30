@@ -1,0 +1,148 @@
+<div class="panel panel-primary">
+    <div class="panel-body" style="text-align: center; margin:0 auto">
+        <h1>Update Your Vehicle</h1>
+    </div>
+</div>
+
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <a ui-sref="profile.vehicleList" class="btn btn-primary">
+                    <- Back
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <form class="form-horizontal" novalidate name="editVehicleForm">
+                <fieldset>
+                    <!-- Plate Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="plate">Plate <span style="color: #ff0000;" ng-hide="editVehicleCtrl.vehicle.plate">*</span></label>
+                        <div class="col-md-4">
+                            <input ng-pattern="/^(0[1-9]|[1-7][0-9]|8[01])(([A-PR-VYZ])(\d{4,5})|([A-PR-VYZ]{2})(\d{3,4})|([A-PR-VYZ]{3})(\d{2,3}))$/"
+                                   ng-model-options="{ debounce: 100 }" minlength="7" maxlength="8" id="plate" ng-model="editVehicleCtrl.vehicle.plate"
+                                   name="plate" type="text" placeholder="ex:35GS1905" class="form-control"  uppercase-no-space  required>
+                            <div ng-messages="editVehicleForm.plate.$error" ng-if="editVehicleForm.plate.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="unique">There's already a vehicle with this plate</div>
+                                <div ng-message="pattern">Enter a valid plate</div>
+                                <div ng-message="minlength">Atleast 7 characters</div>
+                                <div ng-message="maxlength">Can not exceed 13 characters</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Type Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="type">Type <span style="color: #ff0000;" ng-hide="editVehicleCtrl.vehicle.type">*</span></label>
+                        <div class="col-md-4">
+                            <input id="type" required name="type" type="text" placeholder="ex:Car, bus.." maxlength="100"
+                                   ng-model="editVehicleCtrl.vehicle.type" class="form-control">
+                            <div ng-messages="editVehicleForm.type.$error" ng-if="editVehicleForm.type.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="maxlength">Can not exceed 100 characters</div>
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Brand Input-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="brand">Brand <span style="color: #ff0000;" ng-hide="editVehicleCtrl.vehicle.brand">*</span></label>
+                        <div class="col-md-4">
+                            <input id="brand" name="brand" required type="text" placeholder="ex:BMW, mercedes.." maxlength="100"
+                                   ng-model="editVehicleCtrl.vehicle.brand" class="form-control">
+                            <div ng-messages="editVehicleForm.brand.$error" ng-if="editVehicleForm.brand.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="maxlength">Can not exceed 100 characters</div>
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Input -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="vehicleModel">Model <span style="color: #ff0000;" ng-hide="editVehicleCtrl.vehicle.vehicleModel">*</span></label>
+                        <div class="col-md-4">
+                            <input id="vehicleModel" required name="vehicleModel" type="text" placeholder="ex:520i" maxlength="100"
+                                   ng-model="editVehicleCtrl.vehicle.vehicleModel" class="form-control">
+                            <div ng-messages="editVehicleForm.vehicleModel.$error" ng-if="editVehicleForm.vehicleModel.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="maxlength">Can not exceed 100 characters</div>
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Year Input -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="modelYear">Model Year <span style="color: #ff0000;" ng-hide="editVehicleCtrl.vehicle.modelYear">*</span></label>
+                        <div class="col-md-4">
+                            <input id="modelYear" name="modelYear" required ng-pattern="/^(1[9][0-9][0-9]|2[0][0-1][0-7])$/g" type="text" placeholder="ex:1969" minlength="4" maxlength="4"
+                                   ng-model="editVehicleCtrl.vehicle.modelYear" class="form-control">
+                            <div ng-messages="editVehicleForm.modelYear.$error" ng-if="editVehicleForm.modelYear.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="minlength">Atleast 4 numbers</div>
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="pattern">Only numbers between 1900-2017</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nickname Input -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="nickname">Nickname</label>
+                        <div class="col-md-4">
+                            <input id="nickname" name="nickname" type="text" placeholder="ex:Batmobile" maxlength="100"
+                                   ng-model="editVehicleCtrl.vehicle.nickname" value="" class="form-control">
+                        </div>
+                    </div>
+
+                    <!-- Color Input -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="color">Color</label>
+                        <div class="col-md-4">
+                            <input id="color" name="color" type="text" placeholder="ex:potato" maxlength="50"
+                                   ng-model="editVehicleCtrl.vehicle.color" class="form-control">
+                        </div>
+                        <div ng-messages="editVehicleForm.color.$error" ng-if="editVehicleForm.color.$touched"
+                             class="validation-error-messages">
+                            <div ng-message="maxlength">Can not exceed 50 characters</div>
+                        </div>
+                    </div>
+
+                    <!-- Select availability -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="active">Availability <span style="color: #ff0000;" ng-hide="editVehicleCtrl.vehicle.active">*</span></label>
+                        <div class="col-md-4">
+                            <select id="active" required name="active" data-ng-model="editVehicleCtrl.vehicle.active" class="form-control">
+                                <option ng-selected="editVehicleCtrl.vehicle.active == true" value="1">Active</option>
+                                <option  value="0">Inactive</option>
+                            </select>
+                            <div ng-messages="editVehicleForm.active.$error" ng-if="editVehicleForm.active.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="edit"></label>
+                        <div class="col-md-4">
+                            <button id="edit" name="edit" ng-click="editVehicleCtrl.edit(editVehicleForm)" data-ng-disabled="editVehicleForm.$invalid || editVehicleCtrl.disableSubmit"
+                                    class="btn" type="submit" ng-keydown="$event.keyCode === 13 && editVehicleCtrl.edit(editVehicleForm)"
+                                    ng-class="{'button-red' : editVehicleForm.$invalid && editVehicleForm.$dirty, 'button-green' : editVehicleForm.$valid && editVehicleForm.$dirty}"
+                                    >edit</button>
+                        </div>
+                    </div>
+                    <div ng-show="editVehicleForm.$invalid" class="well">* are required.</div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

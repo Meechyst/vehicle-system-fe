@@ -1,0 +1,72 @@
+<div ng-hide="userDetailsCtrl.errorCode == '3' ">
+    <div ng-show="userDetailsCtrl.vehicles || userDetailsCtrl.errorCode == '2' || userDetailsCtrl.errorCode == '1' ">
+        <div class="panel panel-primary">
+            <div class="panel-body" style="text-align: center; margin:0 auto">
+                <h1>{{userDetailsCtrl.vehicles[0].user.name || userDetailsCtrl.uriUser.name}}'s Vehicle
+                    Profile</h1>
+            </div>
+        </div>
+
+        <div class="panel panel-primary">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <a ui-sref="profile.vehicleList" class="btn btn-primary">
+                            <- Back
+                        </a>
+
+                        <div class="pull-right" ng-if="userDetailsCtrl.loggedUser.id == userDetailsCtrl.uriUser.id">
+                            <a ui-sref="profile.registerVehicle({userId: {{userDetailsCtrl.loggedUser.id}} })"
+                               class="btn btn-success">
+                                Register New Vehicle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-4"><strong>Username:</strong></div>
+                    <div class="col-sm-7">{{userDetailsCtrl.vehicles[0].user.name || userDetailsCtrl.uriUser.name}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"><strong>Email:</strong></div>
+                    <div class="col-sm-7">{{userDetailsCtrl.vehicles[0].user.email|| userDetailsCtrl.uriUser.email}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4"><strong>Joined:</strong></div>
+                    <div class="col-sm-7">{{userDetailsCtrl.vehicles[0].user.created_at ||
+                       userDetailsCtrl.uriUser.created_at}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3"><h3>User's Vehicles</h3></div>
+                    <hr/>
+                </div>
+                <div ng-repeat="vehicle in userDetailsCtrl.vehicles">
+                    <div class="row">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-8"><strong>
+
+                            <a ui-sref="profile.vehicleDetail({userId: {{vehicle.user.id}}, vehicleId:{{vehicle.id}}})">{{vehicle.plate}}</a></strong>
+                            -
+                             {{vehicle.vmodel.year}} <span ng-style="{color: vehicle.color}">{{vehicle.color}}</span>
+                            {{vehicle.vmodel.brand.name}} {{vehicle.vmodel.name}} <i>({{vehicle.nickname | ifEmpty:'No Nickname'}})</i>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div ng-hide="userDetailsCtrl.vehicles" style="text-align: center">
+        <h1 class="alert-warning">{{userDetailsCtrl.error}}</h1>
+        <div class="center" ng-if="userDetailsCtrl.loggedUser.id == userDetailsCtrl.uriUser.id">
+            <a ui-sref="profile.registerVehicle({userId: {{userDetailsCtrl.loggedUser.id}} })"
+               class="btn btn-success">
+                Register New Vehicle
+            </a>
+            <br/><br/>or
+        </div>
+        <p>Try choosing from the <a ui-sref="profile.vehicleList">list</a></p>
+    </div>

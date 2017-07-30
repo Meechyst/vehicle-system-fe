@@ -1,0 +1,77 @@
+<div class="panel panel-primary">
+    <div class="panel-body" style="text-align: center; margin:0 auto">
+        <h1>All Vehicles</h1>
+    </div>
+</div>
+<div ng-show="vehicleListCtrl.vehicles">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+                <table class="table table-hover">
+                <thead>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <a ng-click="vehicleListCtrl.order('plate'); vehicleListCtrl.sortDirection()">
+                            Plate
+                        <span ng-show="vehicleListCtrl.caret"
+                              class="fa fa-caret-down"></span>
+                        <span ng-hide="vehicleListCtrl.caret"
+                              class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a ng-click="vehicleListCtrl.order('vmodel.brand.name'); vehicleListCtrl.sortDirection()">
+                            Brand
+                            <span ng-show="vehicleListCtrl.caret" class="fa fa-caret-down"></span>
+                            <span ng-hide="vehicleListCtrl.caret" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <a ng-click="vehicleListCtrl.order('user.name'); vehicleListCtrl.sortDirection()">
+                            Vehicle Owner
+                            <span ng-show="vehicleListCtrl.caret" class="fa fa-caret-down"></span>
+                            <span ng-hide="vehicleListCtrl.caret" class="fa fa-caret-up"></span>
+                        </a>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Filter</td>
+                    <td><input type="text" class="white-input" ng-model="search.plate"/></td>
+                    <td><input type="text" class="white-input" ng-model="search.vmodel.brand.name"/></td>
+                    <td><input type="text" class="white-input" ng-model="search.user.name"/></td>
+                </tr>
+                <tr>
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                <input type="text" class="form-control white-input" placeholder="Search Everywhere"
+                                       ng-model="searchAll">
+                            </div>
+                        </div>
+                    </form>
+                </tr>
+
+                <tr ng-repeat="vehicle in vehicleListCtrl.vehicles |  orderBy:vehicleListCtrl.predicate:vehicleListCtrl.reverse | filter:vehicleListCtrl.paginate | filter:search | filter: searchAll |  filter:replaceAccents">
+                    <td></td>
+                    <td><a ui-sref="profile.vehicleDetail({userId:{{vehicle.user.id}}, vehicleId:{{vehicle.id}}})">{{vehicle.plate}}</a>
+                    </td>
+                    <td>{{vehicle.vmodel.brand.name | ifEmpty:'N/A'}}</td>
+                    <td><a ui-sref="profile.userDetail({userId:{{vehicle.user.id}}})">{{vehicle.user.name}}</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div ng-hide="vehicleListCtrl.vehicles" style="text-align: center">
+    <h1 class="alert-warning">No vehicles registered yet</h1>
+    <h3>Go ahead and be the first!</h3>
+    <a ui-sref="profile.registerVehicle({userId: {{vehicleListCtrl.user.id}} })"
+       class="btn btn-success">
+        Register New Vehicle
+    </a>
+</div>

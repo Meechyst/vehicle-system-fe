@@ -1,0 +1,127 @@
+<div class="col-md-6 col-md-offset-3 page-logo"><img style=" -webkit-user-drag: none;
+" src="https://d3nguogvf56mqz.cloudfront.net/v1.5.154/img/mynextmatch_logo.svg" alt=""/></div>
+<div class="col-md-6 col-md-offset-3 page-logo">
+    <!-- REGISTRATION FORM -->
+    <div class="text-center center-main">
+        <div class="logo"><h2>SIGN UP</h2></div>
+        <!-- Main Form -->
+        <div class="login-form-1">
+            <form id="register-form" name="registerForm" novalidate class="text-left">
+                <div class="login-form-main-message"></div>
+                <div class="main-login-form">
+                    <div class="login-group">
+
+                        <!-- username -->
+                        <div class="form-group">
+                            <label for="name" class="sr-only">Username</label>
+                            <input type="text" required class="form-control white-input" minlength="3" max="100" id="name"
+                                   name="name"
+                                   ng-model="signupCtrl.formData.name" placeholder="Username" unique-name
+                                   ng-pattern="/[0-9a-zA-Z]/g"
+                                   data-ng-trim="false" value-restrict>
+
+                            <div ng-messages="registerForm.name.$error" ng-if="registerForm.name.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="pattern">Username can only contain letters and numbers</div>
+                                <div ng-message="unique">You already have an account. Click
+                                    <a ng-click="signupCtrl.gotoLoginWithUsername(registerForm.name.$viewValue)">here</a>
+                                    to login
+                                </div>
+                                <div ng-message="minlength">Atleast 3 characters</div>
+                                <div ng-message="maxlength">Can not exceed 100 characters</div>
+
+                            </div>
+                        </div>
+                        <!-- username end -->
+
+                        <!-- email -->
+                        <div class="form-group">
+                            <label for="email" class="sr-only">Email address</label>
+                            <input name="email" ng-model="signupCtrl.formData.email "
+                                   ng-model-options="{ debounce: 100 }"
+                                   required minlength="7" maxlength="100" ng-pattern="/^.+@.+\..+$/"
+                                   type="email" class="form-control white-input" id="email" unique-email placeholder="Email">
+
+                            <div ng-messages="registerForm.email.$error" ng-if="registerForm.email.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="unique">There's already an account associated with this email</div>
+                                <div ng-message="email">Enter a valid email address</div>
+                                <div ng-message="minlength">Atleast 7 characters</div>
+                                <div ng-message="maxlength">Can not exceed 100 characters</div>
+                            </div>
+                        </div>
+                        <!-- email end -->
+
+
+                        <!-- password -->
+                        <div class="form-group">
+                            <label for="password" class="sr-only">Password</label>
+                            <input type="password" name="password" ng-model="signupCtrl.formData.password"
+                                   required minlength="4" maxlength="100" class="form-control white-input" id="password"
+                                   placeholder="Password">
+
+                            <div ng-messages="registerForm.password.$error" ng-if="registerForm.password.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="minlength">At least 4 characters</div>
+                                <div ng-message="maxlength">Can't exceed 100 characters</div>
+                            </div>
+                        </div>
+                        <!-- password end -->
+
+                        <!-- confirm password  -->
+                        <div class="form-group">
+                            <label for="reg_password_confirm" class="sr-only">Password Confirm</label>
+                            <input type="password" required minlength="4" compare-to="signupCtrl.formData.password"
+                                   ng-model="signupCtrl.formData.confirmPassword" maxlength="100" class="form-control white-input"
+                                   id="reg_password_confirm" ng-disabled="!signupCtrl.formData.password"
+                                   name="confirmPassword" ng-keydown="$event.keyCode == 13 && signupCtrl.register(registerForm)"
+                                   placeholder="Confirm Password">
+
+                            <div class="validation-error-messages" ng-messages="registerForm.confirmPassword.$error"
+                                 ng-if="registerForm.confirmPassword.$touched">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="minlength">At least 4 characters</div>
+                                <div ng-message="maxlength">Can't exceed 100 characters</div>
+                                <div ng-message="compareTo">Password confirmation must match</div>
+                            </div>
+                        </div>
+                        <!-- confirm password end -->
+
+                        <!-- terms -->
+                        <div class="form-group login-group-checkbox">
+                            <input ng-model="signupCtrl.formData.terms" required="" type="checkbox"
+                                   id="reg_agree" name="terms">
+                            <label for="reg_agree">I agree with <strike>bunch of stuff I won't read</strike><a href="#">
+                                terms.</a></label>
+
+                            <div class="validation-error-messages" ng-messages="registerForm.terms.$error"
+                                 ng-if="registerForm.terms.$touched">
+                                <div ng-message="required">This field is required</div>
+                            </div>
+                        </div>
+                        <!-- terms end -->
+                    </div>
+
+                    <button data-ng-disabled="registerForm.$invalid || signupCtrl.disableSubmit"
+                            type="submit" ng-keydown="$event.keyCode == 13 && signupCtrl.register(registerForm)"
+                            ng-click="signupCtrl.register(registerForm)"
+                            ng-class="{'button-red' : registerForm.$invalid && registerForm.$dirty,
+                             'button-green' : registerForm.$valid && registerForm.$dirty,
+                              'continuous': signupCtrl.disableSubmit }"
+                            class="login-button"><i class="fa fa-chevron-right"></i>
+                    </button>
+
+                </div>
+                <div class="etc-login-form">
+                    <p>Already have an account? <a ui-sref="auth.login">Login here</a></p>
+                </div>
+            </form>
+        </div>
+        <!-- Main Form End -->
+    </div>
+</div>
+<!-- REGISTRATION FORM END -->
+

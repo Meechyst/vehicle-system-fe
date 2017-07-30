@@ -1,0 +1,10 @@
+/node_modules
+/.idea
+Homestead.json
+Homestead.yaml
+.env
+/public/index.html
+/public/css/*
+/public/js/*
+/public/templates/*
+/public/mix-manifest.json

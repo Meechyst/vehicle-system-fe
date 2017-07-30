@@ -1,0 +1,15 @@
+{
+    "/public/css/app.css": "/public/css/app.css",
+    "/public/js/vendor.js": "/public/js/vendor.js",
+    "/public/js/app.js": "/public/js/app.js",
+    "/public/templates/login.html": "/public/templates/login.html",
+    "/public/templates/sign-up.html": "/public/templates/sign-up.html",
+    "/public/templates/error404.html": "/public/templates/error404.html",
+    "/public/templates/index.html": "/public/templates/index.html",
+    "/public/templates/profile.html": "/public/templates/profile.html",
+    "/public/templates/user-details.html": "/public/templates/user-details.html",
+    "/public/templates/edit-vehicle.html": "/public/templates/edit-vehicle.html",
+    "/public/templates/profile.vehicle-details.html": "/public/templates/profile.vehicle-details.html",
+    "/public/templates/profile.vehicle-list.html": "/public/templates/profile.vehicle-list.html",
+    "/public/templates/register-vehicle.html": "/public/templates/register-vehicle.html"
+}

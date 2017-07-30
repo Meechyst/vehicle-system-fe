@@ -1,0 +1,52 @@
+<div id="blackout" ng-show="profileCtrl.pageGrayOut"><div id="loading"></div></div>
+<div ng-if="profileCtrl.user" layout="row" layout-align="center center">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" ui-sref="profile.vehicleList"><img style=" -webkit-user-drag: none;
+" src="https://d3nguogvf56mqz.cloudfront.net/v1.5.154/img/mynextmatch_logo.svg" alt=""/><small>Vehicle System</small></a>
+
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a ui-sref="profile.userDetail({userId:{{profileCtrl.user.id}}})">Hello, {{profileCtrl.user.name}}</a> </li>
+                    <li ><a href="#" ng-click="profileCtrl.logout()">Log Out</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+</div>
+
+<div style="padding:0px;" class="container">
+    <div class="row">
+
+        <div class="col-sm-6 col-md-3" >
+            <div class="thumbnail">
+                <div class="imagewrap">
+                <img src="http://placehold.it/250/56acb2" class="profile-image">
+                </div>
+                <div class="caption">
+                    <h3>{{profileCtrl.user.name}}</h3>
+                    <p>{{profileCtrl.user.email}}</p>
+                    <p><a href="/#/profile/{{profileCtrl.user.id}}">My Profile</a></p>
+                    <p><a ng-click="profileCtrl.dummyData()">Generate Dummy Data</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-9">
+
+
+        <div ui-view="profile-vehicle-list"></div>
+        <div ui-view="profile-vehicle-details"></div>
+        <div ui-view="profile-user-details"></div>
+        <div ui-view="profile-register-vehicle"></div>
+        <div ui-view="profile-edit-vehicle"></div>
+
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="col-md-6 col-md-offset-3 page-logo"><img style=" -webkit-user-drag: none;
+" src="https://d3nguogvf56mqz.cloudfront.net/v1.5.154/img/mynextmatch_logo.svg" alt=""/></div>
+
+<div class="col-md-6 col-md-offset-3 page-logo">
+
+    <!-- LOGIN FORM -->
+    <div class="text-center center-main">
+        <div class="logo"><h2>LOGIN</h2></div>
+        <!-- Main Form -->
+        <div class="login-form-1">
+            <div ng-form="loginCtrl.loginForm" class="text-left">
+                <div class="login-form-main-message"></div>
+                <div class="main-login-form">
+                    <div class="login-group">
+                        <div class="form-group">
+
+                            <!-- username -->
+                            <label for="name" class="sr-only">Username</label>
+                            <input ng-model="loginCtrl.formData.name" ng-pattern="/[0-9a-zA-Z]/g"
+                                   type="text" class="form-control white-input" id="name" value-restrict required name="name"
+                                   placeholder="Username">
+                            <div ng-if="loginCtrl.loginForm.$valid && loginCtrl.loginForm.$dirty" ng-click="loginCtrl.clearFormData()" class="inside-input">X</div>
+
+                            <div ng-messages="loginCtrl.loginForm.name.$error" ng-if="loginCtrl.loginForm.name.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="pattern">Username can only contain letters and numbers</div>
+                            </div>
+                        </div>
+                        <!-- username end -->
+
+                        <!-- password -->
+                        <div class="form-group">
+                            <label for="password" class="sr-only">Password</label>
+                            <input ng-model="loginCtrl.formData.password" type="password"
+                                   class="form-control white-input" id="password" name="password"
+                                   minlength="4" required placeholder="Password"
+                                   ng-keydown="$event.keyCode == 13 && loginCtrl.login()">
+
+                            <div ng-messages="loginCtrl.loginForm.password.$error" ng-if="loginCtrl.loginForm.password.$touched"
+                                 class="validation-error-messages">
+                                <div ng-message="required">This field is required</div>
+                                <div ng-message="minlength">At least 4 characters</div>
+                            </div>
+                        </div>
+                        <!-- password end -->
+
+                        <!-- remember -->
+                        <div class="form-group login-group-checkbox">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember Me</label>
+                        </div>
+                        <!-- remember end -->
+
+                    </div>
+                    <button
+                            ng-keydown="$event.keyCode == 13 && loginCtrl.login()"
+                            data-ng-disabled="loginCtrl.loginForm.$invalid || loginCtrl.disableSubmit"
+                            ng-click="loginCtrl.login()" class="login-button"
+                            ng-class="{'button-red' : loginCtrl.loginForm.$invalid && loginCtrl.loginForm.$dirty,
+                        'button-green' : loginCtrl.loginForm.$valid && loginCtrl.loginForm.$dirty,
+                        'continuous': loginCtrl.disableSubmit }">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="etc-login-form">
+                    <p>New in town? <a ui-sref="auth.signup">Create new account</a></p>
+                </div>
+            </div>
+        </div>
+        <!-- Main Form End -->
+    </div>
+</div>
+
+<!-- LOGIN FORM END-->
